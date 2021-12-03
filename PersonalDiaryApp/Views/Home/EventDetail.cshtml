@@ -1,0 +1,75 @@
+﻿@model PersonalDiaryApp.Models.EventModel
+
+@{
+    ViewData["Title"] = "EventDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <input type="button" class="col-lg-3 col-md-3 col-sm-3 btn btn-primary" value="Add Event" onclick="AddNewEvent()" />
+    <span class="col-lg-3 col-md-3 col-sm-3"></span>
+    <span class="col-lg-3 col-md-3 col-sm-3 float-right"><B>@TempData["UserName"]</B></span>
+    <input type="button" class="col-lg-1 col-md-1 col-sm-3 btn btn-danger float-right" value="Logout" onclick="LogOut()" />
+</div>
+<hr />
+<hr />
+<h1>Event Detail</h1>
+
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @*@Html.DisplayFor(model => model.EventTitle)*@
+            @Model.EventTitle
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @*@Html.DisplayFor(model => model.EventDescription)*@
+            @Model.EventDescription
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dt>
+        <dd class="col-sm-10">
+            @*@Html.DisplayFor(model => model.EventDate)*@
+            @Model.EventDate.ToShortDateString()
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventImage)
+        </dt>
+        <dd class="col-sm-10">
+            <div class="form-group">
+                @if (!string.IsNullOrEmpty(Model.EventImage))
+                {
+                    <img src="@Model.EventImage" alt="No Image" height="300" width="500" />
+                }
+                else
+                {
+                    <img src="~/Images/NoImage.png" height="300" width="500" />
+                }
+            </div>
+        </dd>
+    </dl>
+</div>
+<div>
+    <input type="button" class="btn btn-primary" value="Edit Event" onclick="EditEvent(@Model.EventId)" /> &nbsp;
+    <input type="button" class="btn btn-danger" value="Delete Event" onclick="DeleteEvent(@Model.EventId)" /> &nbsp;
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+
+    function EditEvent(eventId) {
+        window.location.href = '@Url.Action("EditEvent", "Home")?eventId=' + eventId;
+    }
+    function DeleteEvent(eventId) {
+        var result = confirm("Are you sure for delete this recipe ?");
+        if (result) {
+            window.location.href = '@Url.Action("DeleteEvent", "Home")?eventId=' + eventId;
+        }
+    }
+</script>

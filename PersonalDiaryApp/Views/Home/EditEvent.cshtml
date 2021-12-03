@@ -1,0 +1,86 @@
+﻿@model PersonalDiaryApp.Models.EventModel
+
+@{
+    ViewData["Title"] = "EditEvent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <input type="button" class="col-lg-3 col-md-3 col-sm-3 btn btn-primary" value="Add Event" onclick="AddNewEvent()" />
+    <span class="col-lg-3 col-md-3 col-sm-3"></span>
+    <span class="col-lg-3 col-md-3 col-sm-3 float-right"><B>@TempData["UserName"]</B></span>
+    <input type="button" class="col-lg-1 col-md-1 col-sm-3 btn btn-danger float-right" value="Logout" onclick="LogOut()" />
+</div>
+<hr />
+<hr />
+<h1>Edit Event</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditEvent" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EventId" />
+            <div class="form-group">
+                <label asp-for="EventTitle" class="control-label"></label>
+                <input asp-for="EventTitle" class="form-control" />
+                <span asp-validation-for="EventTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventDescription" class="control-label"></label>
+                <input asp-for="EventDescription" class="form-control" />
+                <span asp-validation-for="EventDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventDate" class="control-label"></label>
+                <input type="date" asp-for="EventDate" class="form-control" />
+                <span asp-validation-for="EventDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    @if (!string.IsNullOrEmpty(Model.EventImage))
+                    {
+                        <img src="@Model.EventImage" alt="No Image" height="300" width="500" />
+                    }
+                    else
+                    {
+                        <img src="~/images/NoImage.png" height="300" width="500" />
+                    }
+
+                    <input type="hidden" value="@Model.EventImage" name="oldImage" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="EventImage" class="control-label"></label>
+                    <input asp-for="EventImage" class="form-control-file" type="file" id="eventImage" accept="image/png, image/gif, image/jpeg" onchange="FileUploadChnage();" />
+                    <span asp-validation-for="EventImage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    function FileUploadChnage() {
+
+        var recipeFile = document.getElementById('eventImage');
+
+        if (recipeFile.files.length > 0) {
+            var size = recipeFile.files.item(0).size / (1024 * 1024);
+            if (size > 2) {
+                alert("please select a file less than 2MB");
+                document.getElementById('eventImage').value = null;
+            }
+        }
+    }
+</script>
