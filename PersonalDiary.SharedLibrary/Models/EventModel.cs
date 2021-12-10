@@ -11,14 +11,18 @@ namespace PersonalDiary.SharedLibrary.Models
         public int EventId { get; set; }
 
         [Required]
+        [Display(Name = "Event Title")]
         public string EventTitle { get; set; }
 
         [Required]
+        [Display(Name = "Event Description")]
         public string EventDescription { get; set; }
 
         [Required]
+        [Display(Name = "Event Date")]
         public DateTime EventDate { get; set; }
 
+        [Display(Name = "Event Image")]
         public string EventImage { get; set; }
 
         public int UserId { get; set; }
