@@ -31,9 +31,9 @@ namespace PersonalDiaryAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
-            
+
+            //var connectionString = "Server=(localdb)\\mssqllocaldb;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var connectionString = "Server=PINTU-DABHI;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<PersonalDiaryDataContext>()
                 .AddDefaultTokenProviders();
