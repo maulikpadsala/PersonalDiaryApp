@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using PersonalDiaryApp.Common;
+using PersonalDiary.SharedLibrary.Models;
 using PersonalDiaryApp.Models;
 using System;
 using System.Collections.Generic;
@@ -30,30 +30,34 @@ namespace PersonalDiaryApp.Controllers
         [HttpPost]
         public IActionResult Login(LoginModel model)
         {
-            string path = ApiURL + "Login/Login?username="+model.Username+ "&password="+model.Password;
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = client.GetAsync(path).Result;
-            UserModel userData = new UserModel();
-            
-            if (response.IsSuccessStatusCode)
-            {
-                var result = response.Content.ReadAsStringAsync().Result;
-                userData = JsonConvert.DeserializeObject<UserModel>(result);
+            string path = ApiURL + "Login/Login";
 
-                if (userData.UserId == 0)
+            HttpClient client = new HttpClient();
+
+            var json = JsonConvert.SerializeObject(model);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(
+                path, stringContent).Result;
+
+            var result = JsonConvert.DeserializeObject<UserModel>(response.Content.ReadAsStringAsync().Result);
+
+            if (result.IsSuccess)
+            {
+                if (result.UserId == 0 || !string.IsNullOrEmpty(result.Error))
                 {
-                    model.Error = "Username or password invalid, Please try Agaian.";
                     return View(model);
                 }
                                 
-                HttpContext.Session.SetString("UserName", userData.FirstName + " " + userData.LastName);
-                HttpContext.Session.SetInt32("UserId", userData.UserId);
+                HttpContext.Session.SetString("UserName", result.FirstName + " " + result.LastName);
+                HttpContext.Session.SetInt32("UserId", result.UserId);
+                HttpContext.Session.SetString("AccessToken", result.Token);
+
                 model.Error = string.Empty;
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                model.Error = "Username or password invalid, Please try Agaian.";
+                model.Error = result.Error;
                 return View(model);
             }
             
@@ -69,19 +73,23 @@ namespace PersonalDiaryApp.Controllers
         public IActionResult Registration(UserModel model)
         {
             string path = ApiURL + "Login/CreateUser";
-            HttpClient client = new HttpClient();
 
+            HttpClient client = new HttpClient();
+            
             var json = JsonConvert.SerializeObject(model);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(
                 path, stringContent).Result;
-            if (response.IsSuccessStatusCode)
+
+            var result = JsonConvert.DeserializeObject<UserModel>(response.Content.ReadAsStringAsync().Result);
+
+            if (result.IsSuccess)
             {
                 return RedirectToAction("Login", "Login");
             }
             else
             {
-                return View(model);
+                return View(result);
             }
         }
         public IActionResult LogOut()

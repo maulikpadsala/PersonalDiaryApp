@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalDiary.SharedLibrary\PersonalDiary.SharedLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

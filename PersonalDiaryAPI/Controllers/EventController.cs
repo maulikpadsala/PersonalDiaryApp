@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PersonalDiary.SharedLibrary.Models;
 using PersonalDiaryAPI.Database;
-using PersonalDiaryApp.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +12,10 @@ using System.Threading.Tasks;
 
 namespace PersonalDiaryAPI.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventController : ControllerBase
     {
         
@@ -22,21 +26,30 @@ namespace PersonalDiaryAPI.Controllers
         }
         [Route("GetAllUserEvents")]
         [HttpGet]
-        public async Task<List<EventModel>> GetAllUserEvents(int userId =0)
+        [Authorize]
+        public async Task<EventListModel> GetAllUserEvents(int userId =0)
         {
-            List<EventModel> response = new List<EventModel>();
+            EventListModel response = new EventListModel();
+
+            if (userId==0)
+            {
+                return new EventListModel { 
+                    Error="User Id Not Valid."
+                };
+            }
 
             try
             {
                 var list = DbContext.Set<EventModel>().Where(m=>m.UserId==userId).ToListAsync().Result;
+                response.eventList = new List<EventModel>();
                 foreach (var item in list)
                 {
-                    response.Add(item);
+                    response.eventList.Add(item);
                 }
             }
             catch (Exception ex)
             {
-                response = new List<EventModel>();
+                response = new EventListModel();
             }
 
             return response;

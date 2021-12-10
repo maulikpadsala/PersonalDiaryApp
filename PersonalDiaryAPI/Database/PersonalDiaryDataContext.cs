@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PersonalDiaryApp.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using PersonalDiary.SharedLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PersonalDiaryAPI.Database
 {
-    public class PersonalDiaryDataContext: DbContext
+    public class PersonalDiaryDataContext: IdentityDbContext
     {
         public PersonalDiaryDataContext(DbContextOptions options)
       : base(options)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalDiaryAPI.Database;
 
 namespace PersonalDiaryAPI.Migrations
 {
     [DbContext(typeof(PersonalDiaryDataContext))]
-    partial class PersonalDiaryDataContextModelSnapshot : ModelSnapshot
+    [Migration("20211210072736_tokenMigration3")]
+    partial class tokenMigration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,9 +224,6 @@ namespace PersonalDiaryAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Error")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
@@ -237,9 +236,6 @@ namespace PersonalDiaryAPI.Migrations
 
                     b.Property<string>("EventTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IsSuccess")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
