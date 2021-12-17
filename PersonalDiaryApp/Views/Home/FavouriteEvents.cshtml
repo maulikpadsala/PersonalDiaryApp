@@ -1,10 +1,10 @@
 ﻿@using PersonalDiary.SharedLibrary.Models
 @model EventListModel
 @{
-    ViewData["Title"] = "Personal Diary";
+    ViewData["Title"] = "Favourite Events";
 }
 <div>
-    <h1>All Events</h1>
+    <h1>Favourite Events</h1>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12">
     <input type="button" class="col-lg-3 col-md-3 col-sm-3 btn btn-primary" value="Add Event" onclick="AddNewEvent()" />
@@ -17,30 +17,30 @@
         @foreach (EventModel data in Model.eventList)
         {
 
-        <div class="card col-lg-4 col-md-4 col-sm-12">
-            @if (!string.IsNullOrEmpty(data.EventImage))
-            {
-                <img src="@data.EventImage" class="card-image" />
-            }
-            else
-            {
-                <img src="~/Images/NoImage.png" class="card-image" />
-            }
-            <div class="card-title">
-                @data.EventTitle : @data.EventDate.ToShortDateString()
-            </div>
-            <div class="card-desc">
-
-                @data.EventDescription
-            </div>
-            <div class="card-actions">
-                <button type='button' class='card-action-readMore' onclick="EventDetail(@data.EventId)">Read More</button> &nbsp;&nbsp;
-                @if (data.IsFavourite == true)
+            <div class="card col-lg-4 col-md-4 col-sm-12">
+                @if (!string.IsNullOrEmpty(data.EventImage))
                 {
-                    <img src="~/Images/SVG/favorite.png" height="40px" width="40px" />
+                    <img src="@data.EventImage" class="card-image" />
                 }
+                else
+                {
+                    <img src="~/Images/NoImage.png" class="card-image" />
+                }
+                <div class="card-title">
+                    @data.EventTitle : @data.EventDate.ToShortDateString()
+                </div>
+                <div class="card-desc">
+
+                    @data.EventDescription
+                </div>
+                <div class="card-actions">
+                    <button type='button' class='card-action-readMore' onclick="EventDetail(@data.EventId)">Read More</button> &nbsp;&nbsp;
+                    @if (data.IsFavourite == true)
+                    {
+                        <img src="~/Images/SVG/favorite.png" height="40px" width="40px" />
+                    }
+                </div>
             </div>
-        </div>
         }
 
     </div>

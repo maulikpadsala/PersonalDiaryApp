@@ -54,6 +54,39 @@ namespace PersonalDiaryAPI.Controllers
 
             return response;
         }
+        [Route("FavouriteEventsList")]
+        [HttpGet]
+        public async Task<EventListModel> FavouriteEventsList(int userId = 0)
+        {
+            EventListModel response = new EventListModel();
+
+            if (userId == 0)
+            {
+                return new EventListModel
+                {
+                    Error = "User Id Not Valid."
+                };
+            }
+
+            try
+            {
+                var list = DbContext.Set<EventModel>().Where(m => m.UserId == userId && m.IsFavourite==true).OrderByDescending(m => m.EventDate).ToListAsync().Result;
+                response.eventList = new List<EventModel>();
+                foreach (var item in list)
+                {
+                    response.eventList.Add(item);
+                }
+                response.IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                response = new EventListModel();
+                response.Error = "Internal server Error, Please try again.";
+            }
+
+            return response;
+        }        
+
         [Route("CreateEvent")]
         [HttpPost]
         public async Task<EventModel> CreateEvent(EventModel model)

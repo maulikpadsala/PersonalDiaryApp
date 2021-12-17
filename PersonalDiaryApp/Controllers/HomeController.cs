@@ -48,6 +48,34 @@ namespace PersonalDiaryApp.Controllers
             }
             return View(eventList);
         }
+        public IActionResult FavouriteEvents()
+        {
+            if (HttpContext.Session.GetInt32("UserId") == 0)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            EventListModel eventList = new EventListModel();
+            try
+            {
+                TempData["UserName"] = HttpContext.Session.GetString("UserName");
+
+                string path = ApiURL + "Event/FavouriteEventsList?userId=" + HttpContext.Session.GetInt32("UserId");
+
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = client.GetAsync(path).Result;
+                eventList = JsonConvert.DeserializeObject<EventListModel>(response.Content.ReadAsStringAsync().Result);
+                if (eventList.IsSuccess)
+                {
+                    eventList.Error = string.Empty;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                eventList = new EventListModel();
+            }
+            return View(eventList);
+        }
         public IActionResult AddEvent()
         {
             EventModel eventModel = new EventModel();
