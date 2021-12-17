@@ -32,7 +32,8 @@ namespace PersonalDiaryAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
+            //var connectionString = "Server=(localdb)\\mssqllocaldb;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var connectionString = "Server=PINTU-DABHI;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<PersonalDiaryDataContext>()
                 .AddDefaultTokenProviders();
@@ -41,22 +42,7 @@ namespace PersonalDiaryAPI
             services.AddDbContext<PersonalDiaryDataContext>(options =>
             options.UseSqlServer(connectionString));
             services.AddSwaggerGen();
-
-            services.AddAuthentication(auth=> {
-                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("PersonalDiaryAppKey")),
-                    ValidateIssuerSigningKey = true
-                };
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-            });
+                       
             services.AddControllers();
         }
 

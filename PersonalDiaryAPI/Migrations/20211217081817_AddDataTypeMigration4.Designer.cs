@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalDiaryAPI.Database;
 
 namespace PersonalDiaryAPI.Migrations
 {
     [DbContext(typeof(PersonalDiaryDataContext))]
-    partial class PersonalDiaryDataContextModelSnapshot : ModelSnapshot
+    [Migration("20211217081817_AddDataTypeMigration4")]
+    partial class AddDataTypeMigration4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

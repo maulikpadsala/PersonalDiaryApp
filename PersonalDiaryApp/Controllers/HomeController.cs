@@ -22,7 +22,7 @@ namespace PersonalDiaryApp.Controllers
         
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("UserId") == 0 && !string.IsNullOrEmpty(HttpContext.Session.GetString("AccessToken")))
+            if (HttpContext.Session.GetInt32("UserId") == 0)
             {
                 return RedirectToAction("Login","Login");
             }
@@ -33,8 +33,7 @@ namespace PersonalDiaryApp.Controllers
 
                 string path = ApiURL + "Event/GetAllUserEvents?userId=" + HttpContext.Session.GetInt32("UserId");
 
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("AccessToken"));
+                HttpClient client = new HttpClient();                
                 HttpResponseMessage response = client.GetAsync(path).Result;
                 eventList = JsonConvert.DeserializeObject<EventListModel>(response.Content.ReadAsStringAsync().Result);
                 if (eventList.IsSuccess)
@@ -67,7 +66,7 @@ namespace PersonalDiaryApp.Controllers
         {
             try
             {
-                if (HttpContext.Session.GetInt32("UserId") == 0 && !string.IsNullOrEmpty(HttpContext.Session.GetString("AccessToken")))
+                if (HttpContext.Session.GetInt32("UserId") == 0)
                 {
                     return RedirectToAction("Login", "Login");
                 }
@@ -91,8 +90,7 @@ namespace PersonalDiaryApp.Controllers
 
 
                 string path = ApiURL + "Event/CreateEvent";
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("AccessToken"));
+                HttpClient client = new HttpClient();                
                 var json = JsonConvert.SerializeObject(model);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -111,15 +109,14 @@ namespace PersonalDiaryApp.Controllers
             EventModel eventdata = new EventModel();
             try
             {
-                if (HttpContext.Session.GetInt32("UserId") == 0 && !string.IsNullOrEmpty(HttpContext.Session.GetString("AccessToken")))
+                if (HttpContext.Session.GetInt32("UserId") == 0)
                 {
                     return RedirectToAction("Login", "Login");
                 }
                 
                 string path = ApiURL + "Event/GetEvent?eventId=" + eventId;
 
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("AccessToken"));
+                HttpClient client = new HttpClient();                
                 HttpResponseMessage response = client.GetAsync(path).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -140,15 +137,14 @@ namespace PersonalDiaryApp.Controllers
             EventModel eventdata = new EventModel();
             try
             {
-                if (HttpContext.Session.GetInt32("UserId") == 0 && !string.IsNullOrEmpty(HttpContext.Session.GetString("AccessToken")))
+                if (HttpContext.Session.GetInt32("UserId") == 0)
                 {
                     return RedirectToAction("Login", "Login");
                 }
                 
                 string path = ApiURL + "Event/GetEvent?eventId=" + eventId;
 
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("AccessToken"));
+                HttpClient client = new HttpClient();                
                 HttpResponseMessage response = client.GetAsync(path).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -169,7 +165,7 @@ namespace PersonalDiaryApp.Controllers
         {
             try
             {
-                if (HttpContext.Session.GetInt32("UserId") == 0 && !string.IsNullOrEmpty(HttpContext.Session.GetString("AccessToken")))
+                if (HttpContext.Session.GetInt32("UserId") == 0)
                 {
                     return RedirectToAction("Login", "Login");
                 }
@@ -192,8 +188,7 @@ namespace PersonalDiaryApp.Controllers
                 }
 
                 string path = ApiURL + "Event/UpdateEvent";
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("AccessToken"));
+                HttpClient client = new HttpClient();                
                 var json = JsonConvert.SerializeObject(model);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = client.PutAsync(
@@ -212,14 +207,13 @@ namespace PersonalDiaryApp.Controllers
         {
             try
             {
-                if (HttpContext.Session.GetInt32("UserId") == 0 && !string.IsNullOrEmpty(HttpContext.Session.GetString("AccessToken")))
+                if (HttpContext.Session.GetInt32("UserId") == 0)
                 {
                     return RedirectToAction("Login", "Login");
                 }
                 string path = ApiURL + "Event/DeleteEvent?eventId=" + eventid;
 
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("AccessToken"));
+                HttpClient client = new HttpClient();                
                 HttpResponseMessage response = client.DeleteAsync(path).Result;
 
                 if (response.IsSuccessStatusCode)

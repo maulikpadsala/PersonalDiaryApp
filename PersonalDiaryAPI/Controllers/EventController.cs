@@ -14,8 +14,7 @@ namespace PersonalDiaryAPI.Controllers
 {
     
     [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
+    [ApiController]    
     public class EventController : ControllerBase
     {
         

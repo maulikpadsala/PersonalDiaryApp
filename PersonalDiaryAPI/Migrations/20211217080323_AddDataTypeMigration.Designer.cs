@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalDiaryAPI.Database;
 
 namespace PersonalDiaryAPI.Migrations
 {
     [DbContext(typeof(PersonalDiaryDataContext))]
-    partial class PersonalDiaryDataContextModelSnapshot : ModelSnapshot
+    [Migration("20211217080323_AddDataTypeMigration")]
+    partial class AddDataTypeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,8 +247,6 @@ namespace PersonalDiaryAPI.Migrations
 
                     b.HasKey("EventId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Events");
                 });
 
@@ -337,22 +337,6 @@ namespace PersonalDiaryAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PersonalDiary.SharedLibrary.Models.EventModel", b =>
-                {
-                    b.HasOne("PersonalDiary.SharedLibrary.Models.UserModel", "UserModel")
-                        .WithMany("EventList")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserModel");
-                });
-
-            modelBuilder.Entity("PersonalDiary.SharedLibrary.Models.UserModel", b =>
-                {
-                    b.Navigation("EventList");
                 });
 #pragma warning restore 612, 618
         }

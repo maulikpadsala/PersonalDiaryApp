@@ -63,19 +63,6 @@ namespace PersonalDiaryAPI.Controllers
 
                 response = DbContext.Set<UserModel>().Where(m => m.IdentityUserId==user.Id).ToListAsync().Result.FirstOrDefault();
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                var key = Encoding.ASCII.GetBytes("PersonalDiaryAppKey");
-
-                var tokenObject = new JwtSecurityToken(
-                    expires: DateTime.Now.AddDays(3),
-                    signingCredentials: 
-                    new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                    );
-
-                string token = tokenHandler.WriteToken(tokenObject);
-
-                response.Token = token;
                 response.IsSuccess = true;
             }
             catch (Exception ex)

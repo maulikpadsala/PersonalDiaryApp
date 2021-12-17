@@ -49,8 +49,7 @@ namespace PersonalDiaryApp.Controllers
                 }
                                 
                 HttpContext.Session.SetString("UserName", result.FirstName + " " + result.LastName);
-                HttpContext.Session.SetInt32("UserId", result.UserId);
-                HttpContext.Session.SetString("AccessToken", result.Token);
+                HttpContext.Session.SetInt32("UserId", result.UserId);                
 
                 model.Error = string.Empty;
                 return RedirectToAction("Index", "Home");
