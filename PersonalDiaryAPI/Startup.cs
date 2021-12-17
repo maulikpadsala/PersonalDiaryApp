@@ -1,21 +1,11 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using PersonalDiaryAPI.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonalDiaryAPI
 {
@@ -32,8 +22,7 @@ namespace PersonalDiaryAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //var connectionString = "Server=(localdb)\\mssqllocaldb;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
-            var connectionString = "Server=PINTU-DABHI;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=PersonalDiaryApp;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<PersonalDiaryDataContext>()
                 .AddDefaultTokenProviders();
