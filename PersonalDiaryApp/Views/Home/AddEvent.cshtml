@@ -37,6 +37,11 @@
                 <input type="date" asp-for="EventDate" class="form-control" />
                 <span asp-validation-for="EventDate" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsFavourite" />&nbsp;&nbsp; @Html.DisplayNameFor(model => model.IsFavourite)
+                </label>
+            </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label asp-for="EventImage" class="control-label"></label>
@@ -45,7 +50,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" id="CreateEvent"/>
+                <input type="submit" value="Create" class="btn btn-primary" id="CreateEvent" />
             </div>
         </form>
     </div>

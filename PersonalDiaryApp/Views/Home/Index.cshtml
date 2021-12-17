@@ -15,7 +15,7 @@
         {
 
         <div class="card col-lg-4 col-md-4 col-sm-12">
-            @if (data.EventImage != null)
+            @if (!string.IsNullOrEmpty(data.EventImage))
             {
                 <img src="@data.EventImage" class="card-image" />
             }
@@ -27,11 +27,15 @@
                 @data.EventTitle : @data.EventDate.ToShortDateString()
             </div>
             <div class="card-desc">
-                
+
                 @data.EventDescription
             </div>
             <div class="card-actions">
-                <button type='button' class='card-action-readMore' onclick="EventDetail(@data.EventId)">Read More</button>
+                <button type='button' class='card-action-readMore' onclick="EventDetail(@data.EventId)">Read More</button> &nbsp;&nbsp;
+                @if (data.IsFavourite == true)
+                {
+                    <img src="~/Images/SVG/favorite.png" height="40px" width="40px" />
+                }
             </div>
         </div>
         }

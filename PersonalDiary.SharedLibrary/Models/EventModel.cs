@@ -31,7 +31,7 @@ namespace PersonalDiary.SharedLibrary.Models
         [Column(TypeName = "NVARCHAR(MAX)")]
         public string EventImage { get; set; }
 
-        [Display(Name = "Favourite?")]
+        [Display(Name = "Favourite")]
         [Column(TypeName = "BIT")]
         public bool IsFavourite { get; set; }
 

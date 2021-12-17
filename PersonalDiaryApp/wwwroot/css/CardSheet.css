@@ -27,6 +27,7 @@
     padding-left: 0.5em;
     color: #fff;
     font-size: 2em;
+    text-shadow: 1px 2px 2px #000000;
 }
 
 .card-image {

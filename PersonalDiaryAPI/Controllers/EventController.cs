@@ -24,8 +24,7 @@ namespace PersonalDiaryAPI.Controllers
             DbContext = context;
         }
         [Route("GetAllUserEvents")]
-        [HttpGet]
-        [Authorize]
+        [HttpGet]        
         public async Task<EventListModel> GetAllUserEvents(int userId =0)
         {
             EventListModel response = new EventListModel();
@@ -39,16 +38,18 @@ namespace PersonalDiaryAPI.Controllers
 
             try
             {
-                var list = DbContext.Set<EventModel>().Where(m=>m.UserId==userId).ToListAsync().Result;
+                var list = DbContext.Set<EventModel>().Where(m=>m.UserId==userId).OrderByDescending(m=>m.EventDate).ToListAsync().Result;
                 response.eventList = new List<EventModel>();
                 foreach (var item in list)
                 {
                     response.eventList.Add(item);
                 }
+                response.IsSuccess = true;
             }
             catch (Exception ex)
             {
                 response = new EventListModel();
+                response.Error = "Internal server Error, Please try again.";
             }
 
             return response;
